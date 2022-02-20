@@ -1,0 +1,8 @@
+tsconfig.json
+src/
+tests/
+etc/
+.github/
+coverage/
+.idea/
+*.iml
