@@ -1,0 +1,24 @@
+{
+  "name": "@garbee/iso8601",
+  "version": "0.0.0",
+  "description": "ISO 8601 validation aids",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "c8 --config=etc/c8rc.json ava --config=etc/ava.config.mjs",
+    "lint": "eslint --config=etc/eslintrc.cjs --ext=.ts src tests"
+  },
+  "author": "Jonathan Garbee <jonathan@garbee.me>",
+  "license": "Unlicense",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "ava": "^4.0.1",
+    "c8": "^7.11.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  }
+}
