@@ -8,51 +8,86 @@ on:
     types: [created]
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'
+      - run: |
+          npm ci
+          npm run lint
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: |
+          npm ci
+          npm run test
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
       - run: |
           npm ci
           npm run build
-  publish-gpr:
+  publish-tarball:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    env:
-      NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Get Version
+        run: |
+          REF="${{ github.ref_name }}"
+          echo "build_version=${REF:1}" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
-          registry-url: https://npm.pkg.github.com/
+            node-version: 18
+            cache: 'npm'
       - run: |
           npm ci
           npm version ${{ github.ref_name }} --no-git-tag
           npm run build
-          npm publish
-  publish-npm:
-    needs: publish-gpr
+          npm pack
+      - name: Upload package
+        uses: softprops/action-gh-release@v1
+        with:
+          files: garbee-iso8601-${{ env.build_version }}.tgz
+  publish-packages:
+    needs: publish-tarball
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-    env:
-      NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          registry-url: https://registry.npmjs.org
-      - run: |
-          npm ci
-          npm version ${{ github.ref_name }} --no-git-tag
-          npm run build
-          npm publish
+        - uses: actions/checkout@v3
+        - uses: actions/setup-node@v3
+          with:
+            node-version: '18.x'
+            cache: 'npm'
+            registry-url: 'https://registry.npmjs.org'
+        - run: npm ci
+        - run: npm version ${{ github.ref_name }} --no-git-tag
+        - run: npm publish
+          env:
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        - uses: actions/setup-node@v3
+          with:
+            registry-url: 'https://npm.pkg.github.com'
+        - run: npm publish
+          env:
+            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
