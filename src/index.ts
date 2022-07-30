@@ -128,7 +128,7 @@ export const parseDateTimeString = function(value: string):
     );
   }
 
-  const offset = groups.offset !== '' ?
+  const offset = groups.offset !== "" ?
       groups.offset :
       undefined;
 
