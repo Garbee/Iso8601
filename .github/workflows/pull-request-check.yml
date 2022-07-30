@@ -1,0 +1,44 @@
+name: Pull Request Check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    branches:
+      - 'main'
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: |
+          npm ci
+          npx eslint -c etc/eslintrc.cjs $(git diff --name-only --diff-filter=ACMRTUXB ${{ github.base_ref }} | grep -E "(.js|.ts$|.mjs|.cjs$)")
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: |
+          npm ci
+          npm run test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: |
+          npm ci
+          npm run build
