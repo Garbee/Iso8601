@@ -1,0 +1,53 @@
+name: Pull Request Check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    branches:
+      - 'main'
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Install Deps
+        run: npm ci
+      - name: Run eslint on changed files
+        uses: tj-actions/eslint-changed-files@v13
+        with:
+          token: ${{ secrets.HUB_ACCESS_TOKEN }}
+          config_path: "etc/eslintrc.cjs"
+          file_extensions: |
+            **/*.ts
+            **/*.mjs
+            **/*.js
+            **/*.cjs
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build

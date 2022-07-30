@@ -16,9 +16,8 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-      - run: |
-          npm ci
-          npm run lint
+      - run: npm ci
+      - run: npm run lint
   test:
     needs: lint
     runs-on: ubuntu-latest
@@ -28,9 +27,8 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-      - run: |
-          npm ci
-          npm run test
+      - run: npm ci
+      - run: npm run test
   build:
     needs: test
     runs-on: ubuntu-latest
@@ -40,9 +38,8 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-      - run: |
-          npm ci
-          npm run build
+      - run: npm ci
+      - run: npm run build
   publish-tarball:
     needs: build
     runs-on: ubuntu-latest
