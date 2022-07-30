@@ -17,9 +17,8 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-      - run: |
-          npm ci
-          npx eslint -c etc/eslintrc.cjs $(git diff --name-only --diff-filter=ACMRTUXB ${{ github.base_ref }} | grep -E "(.js|.ts$|.mjs|.cjs$)")
+      - run: npm ci
+      - run: npx eslint -c etc/eslintrc.cjs $(git diff --name-only --diff-filter=ACMRTUXB origin/${{ github.base_ref }} | grep -E "(.js|.ts$|.mjs|.cjs$)")
   test:
     runs-on: ubuntu-latest
     steps:
@@ -28,9 +27,8 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-      - run: |
-          npm ci
-          npm run test
+      - run: npm ci
+      - run: npm run test
   build:
     runs-on: ubuntu-latest
     steps:
@@ -39,6 +37,5 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-      - run: |
-          npm ci
-          npm run build
+      - run: npm ci
+      - run: npm run build
