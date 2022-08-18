@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "test": "c8 --config=etc/c8rc.json ava --config=etc/ava.config.mjs",
-    "lint": "eslint --config=etc/eslintrc.cjs --ext=.ts src tests"
+    "lint": "eslint --ext=.ts src tests"
   },
   "author": "Jonathan Garbee <jonathan@garbee.me>",
   "license": "Unlicense",

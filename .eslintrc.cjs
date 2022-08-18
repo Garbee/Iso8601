@@ -11,6 +11,7 @@ module.exports = {
   ],
   env: {
     'es2020': true,
+    'node': true,
   },
   parserOptions: {
     sourceType: 'module',
@@ -19,6 +20,7 @@ module.exports = {
     'max-len': ['error', {
       code: 60,
       ignoreRegExpLiterals: true,
-    }]
+      ignoreUrls: true,
+    }],
   },
 };

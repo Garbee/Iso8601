@@ -1,0 +1,12 @@
+version: 0.1
+cli:
+  version: 0.16.1-beta
+lint:
+  disabled:
+    - prettier
+  enabled:
+    - actionlint@1.6.15
+    - git-diff-check@SYSTEM
+    - gitleaks@8.11.0
+    - markdownlint@0.32.1
+    - eslint@8.22.0

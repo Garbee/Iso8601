@@ -37,13 +37,13 @@ const minutePattern = /(?<minute>[0-5]\d)/;
 const secondsPattern = /(?<seconds>([0-5]\d)|60)/;
 /**
  * Millisesconds have no defined precision.
- * Allowing for up to 8 since this has been seen from Java.
- * It may increase if another language allows for more
- * specificity than that.
- * From 0-99999999.
+ * Allowing for up to 9 since this gets to nanoseconds.
+ * Going beyond nanoseconds seems unreasonable to expect:
+ * https://nickb.dev/blog/iso8601-and-nanosecond-precision-across-languages/
+ * From 0-999999999.
  * The period to denote them is required if MS are present.
  */
-const millisecondsPattern = /(?:\.(?<milliseconds>\d{1,8}))?/;
+const millisecondsPattern = /(?:\.(?<milliseconds>\d{1,9}))?/;
 
 /**
  * Timezone is complex and difficult to break down further
