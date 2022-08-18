@@ -27,7 +27,7 @@ const dayPattern = /(?<day>0[1-9]|[12]\d|3[01])/;
  */
 const hourPattern = /(?<hour>[01]\d|2[0-3])/;
 /**
- * Minutes are alays 2 digits.
+ * Minutes are always 2 digits.
  */
 const minutePattern = /(?<minute>[0-5]\d)/;
 /**
@@ -36,11 +36,14 @@ const minutePattern = /(?<minute>[0-5]\d)/;
  */
 const secondsPattern = /(?<seconds>([0-5]\d)|60)/;
 /**
- * Millisesconds are always 3 digits.
- * From 000-999.
+ * Millisesconds have no defined precision.
+ * Allowing for up to 8 since this has been seen from Java.
+ * It may increase if another language allows for more
+ * specificity than that.
+ * From 0-99999999.
  * The period to denote them is required if MS are present.
  */
-const millisecondsPattern = /(?:\.(?<milliseconds>\d{3}))?/;
+const millisecondsPattern = /(?:\.(?<milliseconds>\d{1,8}))?/;
 
 /**
  * Timezone is complex and difficult to break down further

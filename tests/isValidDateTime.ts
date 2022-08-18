@@ -498,35 +498,35 @@ test(
 );
 
 test(
-    'allows any valid milliseconds',
+    'allows valid milliseconds',
     (t) => {
       const templateFn = (ms) => {
         return `2022-02-03T17:07:12.${ms}Z`;
       };
 
-      for (
-        let i = 0;
-        i <= 999;
-        i++
-      ) {
-        const val = i.toString(10)
-            .padStart(
-                3,
-                '0',
-            );
+      const testMs = function(value: string) {
         t.is(
-            isValidDateTime(templateFn(val)),
+            isValidDateTime(templateFn(value)),
             true,
-            `Millisecond value ${val} was not allowed`,
+            `Millisecond value ${value} was not allowed`,
         );
         t.is(
             isValidDateTime(
-                removeSeparators(templateFn(val)),
+                removeSeparators(templateFn(value)),
             ),
             true,
-            `Millisecond value ${val} was not allowed`,
+            `Millisecond value ${value} was not allowed`,
         );
-      }
+      };
+
+      testMs('99999999');
+      testMs('7192838');
+      testMs('621983');
+      testMs('53982');
+      testMs('4597');
+      testMs('203');
+      testMs('01');
+      testMs('0');
     },
 );
 
