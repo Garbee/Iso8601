@@ -1,7 +1,7 @@
 import test from 'ava';
 import {
   parseDateTimeString,
-} from '../src';
+} from '@garbee/iso8601';
 
 test(
     'handles a valid positive offset string',

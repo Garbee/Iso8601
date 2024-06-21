@@ -2,7 +2,7 @@ import test from 'ava';
 import {
   isValidDateTime,
   parseDateTimeString,
-} from '../src';
+} from '@garbee/iso8601';
 
 const removeSeparators = function(string: string) {
   return string

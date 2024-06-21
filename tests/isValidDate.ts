@@ -1,7 +1,7 @@
 import test from 'ava';
 import {
   isValidDate,
-} from '../src';
+} from '@garbee/iso8601';
 
 test(
     'returns true if year is valid',

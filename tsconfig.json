@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "module": "ES2020",
-    "target": "ES2020",
-    "moduleResolution": "Node",
+    "module": "NodeNext",
+    "target": "ESNext",
+    "moduleResolution": "Node16",
     "outDir": "dist/",
-    "declaration": true
+    "declaration": true,
+    "rootDir": "."
   },
-  "files": [
-    "src/index.ts"
-  ]
+  "include": [
+    "tests/",
+    "src/"
+  ],
 }

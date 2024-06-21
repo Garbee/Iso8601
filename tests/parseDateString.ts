@@ -1,7 +1,7 @@
 import test from 'ava';
 import {
   parseDateString,
-} from '../src';
+} from '@garbee/iso8601';
 
 test(
     'valid strings are converted to an object',
